@@ -43,12 +43,12 @@ public class Program1 extends AbstractProgram1 {
                                                                       ArrayList<Integer> student_projects){
         ArrayList<ArrayList<Integer>> internshipPref = new ArrayList<>(internshipCount);
         for(int i = 0;i<studentCount;i++){
-            internshipPref.set(i, new ArrayList<>(studentCount));
+            internshipPref.add(i, new ArrayList<>(studentCount));
         }
         for(int i = 0;i<internshipCount;i++){
             for(int j = 0;j<studentCount;j++){
                 Integer studentScore = computeInternshipStudentScore(student_GPA.get(j),student_months.get(j),student_projects.get(j),internship_weights.get(i).get(0),internship_weights.get(i).get(1),internship_weights.get(i).get(2)).intValue();
-                internshipPref.get(i).set(j,studentScore);
+                internshipPref.get(i).add(j,studentScore);
             }
         }
         for(int s = 0;s<internshipPref.size();s++){
@@ -56,7 +56,7 @@ public class Program1 extends AbstractProgram1 {
             for(int i =0;i<studentCount;i++){
                 int element = internshipPref.get(s).get(i);
                 for(int j = i-1;j>=0;j--){
-                    if(internshipPref.get(s).get(j)>element){
+                    if(internshipPref.get(s).get(j)<element){
                         internshipPref.get(s).set(j+1,internshipPref.get(s).get(j));
                         internshipPref.get(s).set(j,element);
                     }
