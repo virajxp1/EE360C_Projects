@@ -100,6 +100,11 @@ public class Program1 extends AbstractProgram1 {
             Student preference list
          */
 
+        for(int i = 0;i<marriage.getStudentCount();i++){
+            for(int j = 0;j<marriage.getInternshipCount();j++){
+
+            }
+        }
 
         return true;
     }
