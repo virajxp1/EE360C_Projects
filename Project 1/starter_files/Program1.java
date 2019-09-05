@@ -47,7 +47,7 @@ public class Program1 extends AbstractProgram1 {
         }
         for(int i = 0;i<internshipCount;i++){
             for(int j = 0;j<studentCount;j++){
-                Integer studentScore = computeInternshipStudentScore(student_GPA.get(j),student_months.get(j),student_projects.get(j),internship_weights.get(i).get(0),internship_weights.get(i).get(1),internship_weights.get(i).get(2)).intValue();
+                Integer studentScore = computeInternshipStudentScore(student_GPA.get(j),student_months.get(j),student_projects.get(j),internship_weights.get(i).get(0) ,internship_weights.get(i).get(1),internship_weights.get(i).get(2)).intValue();
                 internshipPref.get(i).add(j,studentScore);
             }
         }
