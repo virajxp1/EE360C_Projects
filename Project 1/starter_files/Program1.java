@@ -77,11 +77,6 @@ public class Program1 extends AbstractProgram1 {
      */
     public boolean isStableMatching(Matching marriage) {
         /* TODO implement this function
-            This method checks for stability
-            check for both kinds of instabilities
-            if neither instability is present than it is stable
-            otherwise if there is an instability return false
-            ------------------------------------------------
             Instability A:
             Student s has internship I
             Student s' has no internship
@@ -93,15 +88,45 @@ public class Program1 extends AbstractProgram1 {
             Internship I prefers s' to s
             Student s' prefers Internship I to I'
             -------------------------------------------------
-            Matching needed fields:
-            Number of internships
-            Number of students
-            Internship preference list
-            Student preference list
          */
-
-        for(int i = 0;i<marriage.getStudentCount();i++){
-            for(int j = 0;j<marriage.getInternshipCount();j++){
+        ArrayList<Integer> student_matching = marriage.getStudentMatching();
+        for(int i = 0;i<student_matching.size();i++){
+            int internship_matching = student_matching.get(i);
+            if(internship_matching != -1){
+                //Instability A
+                ArrayList<Integer> I_pref = marriage.getInternshipPreference().get(internship_matching); //List of the preferences of Internship I
+                ArrayList<Integer> S_pref = marriage.getStudentPreference().get(i); //List of the preferences of Student S
+                Integer studentScore = computeInternshipStudentScore(marriage.getStudentGPA().get(i),marriage.getStudentMonths().get(i),marriage.getStudentProjects().get(i),marriage.getInternshipWeights().get(internship_matching).get(0),marriage.getInternshipWeights().get(internship_matching).get(1),marriage.getInternshipWeights().get(internship_matching).get(2)).intValue();
+                //Find for all that students (Sn) that I prefers over S check if Sn prefers I to In
+                int j = 0;
+                while(I_pref.get(j)>=studentScore){
+                    //I preferes the student with this score over S
+                    //Find the student
+                    int score = I_pref.get(j);
+                    int studentN =0; //A student who is more prefered by the internship than S
+                    for(int k = 0;k<studentScore;k++){ //find the index of the student
+                        Integer tempScore = computeInternshipStudentScore(marriage.getStudentGPA().get(k),marriage.getStudentMonths().get(k),marriage.getStudentProjects().get(k),marriage.getInternshipWeights().get(internship_matching).get(0),marriage.getInternshipWeights().get(internship_matching).get(1),marriage.getInternshipWeights().get(internship_matching).get(2)).intValue();
+                        if(score == tempScore){
+                            studentN = k;
+                            break;
+                        }
+                    }
+                    int Internship_studentN = student_matching.get(studentN); //The internship S' is matched with
+                    //Compare if s' prefers I over I'
+                    ArrayList<Integer> Sn_prefList = marriage.getStudentPreference().get(studentN); //Sn preference list
+                    //I = internship_matching
+                    //I' = internship_studentN
+                    for(int k = 0;k<internship_matching;k++){
+                       if(Sn_prefList.get(k) == Internship_studentN) //I' higher on preference list so no instability
+                            break;
+                       if(Sn_prefList.get(k) == internship_matching) //Instability
+                            return false;
+                    }
+                    j++;
+                }
+            }
+            else{
+                //Instability B
 
             }
         }
