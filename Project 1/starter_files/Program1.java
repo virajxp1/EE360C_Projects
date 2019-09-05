@@ -76,8 +76,32 @@ public class Program1 extends AbstractProgram1 {
      * Study the description of a Matching in the project documentation to help you with this.
      */
     public boolean isStableMatching(Matching marriage) {
-        /* TODO implement this function */
-        return true; /* TODO remove this line */
+        /* TODO implement this function
+            This method checks for stability
+            check for both kinds of instabilities
+            if neither instability is present than it is stable
+            otherwise if there is an instability return false
+            ------------------------------------------------
+            Instability A:
+            Student s has internship I
+            Student s' has no internship
+            I prefers s' to s
+            -------------------------------------------------
+            Instability B:
+            Student s has Internship I
+            Student s' has Internship I'
+            Internship I prefers s' to s
+            Student s' prefers Internship I to I'
+            -------------------------------------------------
+            Matching needed fields:
+            Number of internships
+            Number of students
+            Internship preference list
+            Student preference list
+         */
+
+
+        return true;
     }
 
     /**
