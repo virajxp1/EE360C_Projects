@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d0b089-92e4-4d20-9c92-08d0089daeae" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/starter_files/Program1.java" beforeDir="false" afterPath="$PROJECT_DIR$/starter_files/Program1.java" afterDir="false" />
-    </list>
+    <list default="true" id="f9d0b089-92e4-4d20-9c92-08d0089daeae" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +85,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567726394269</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="isStabale method Instability B beta">
+      <created>1567742971575</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1567742971575</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -112,7 +116,8 @@
     <MESSAGE value="Work on Internship prefrence list" />
     <MESSAGE value="Comments on isStableMatching method" />
     <MESSAGE value="isStabale method Instability A beta" />
-    <option name="LAST_COMMIT_MESSAGE" value="isStabale method Instability A beta" />
+    <MESSAGE value="isStabale method Instability B beta" />
+    <option name="LAST_COMMIT_MESSAGE" value="isStabale method Instability B beta" />
   </component>
   <component name="masterDetails">
     <states>
