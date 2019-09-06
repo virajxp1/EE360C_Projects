@@ -42,21 +42,25 @@ public class Program1 extends AbstractProgram1 {
                                                                       ArrayList<Integer> student_months,
                                                                       ArrayList<Integer> student_projects){
         ArrayList<ArrayList<Integer>> internshipPref = new ArrayList<>(internshipCount);
+        ArrayList<ArrayList<Integer>> studentScores = new ArrayList<>(internshipCount);
         for(int i = 0;i<studentCount;i++){
             internshipPref.add(i, new ArrayList<>(studentCount));
+            studentScores.add(i, new ArrayList<>(studentCount));
+
         }
         for(int i = 0;i<internshipCount;i++){
             for(int j = 0;j<studentCount;j++){
                 Integer studentScore = computeInternshipStudentScore(student_GPA.get(j),student_months.get(j),student_projects.get(j),internship_weights.get(i).get(0) ,internship_weights.get(i).get(1),internship_weights.get(i).get(2)).intValue();
-                internshipPref.get(i).add(j,studentScore);
+                studentScores.get(i).add(j,studentScore);
+                internshipPref.get(i).add(j,j);
             }
         }
         for(int s = 0;s<internshipPref.size();s++){
             //insertion sort for each row
             for(int i =0;i<studentCount;i++){
-                int element = internshipPref.get(s).get(i);
+                int element = studentScores.get(s).get(i);
                 for(int j = i-1;j>=0;j--){
-                    if(internshipPref.get(s).get(j)<element){
+                    if(studentScores.get(s).get(j)<element){
                         internshipPref.get(s).set(j+1,internshipPref.get(s).get(j));
                         internshipPref.get(s).set(j,element);
                     }
@@ -90,62 +94,54 @@ public class Program1 extends AbstractProgram1 {
             -------------------------------------------------
          */
         ArrayList<Integer> student_matching = marriage.getStudentMatching();
-        for(int i = 0;i<student_matching.size();i++){
-            int internship_matching = student_matching.get(i);
-            if(internship_matching != -1){
-                //Instability A
-                ArrayList<Integer> I_pref = marriage.getInternshipPreference().get(internship_matching); //List of the preferences of Internship I
-                Integer studentScore = computeInternshipStudentScore(marriage.getStudentGPA().get(i),marriage.getStudentMonths().get(i),marriage.getStudentProjects().get(i),marriage.getInternshipWeights().get(internship_matching).get(0),marriage.getInternshipWeights().get(internship_matching).get(1),marriage.getInternshipWeights().get(internship_matching).get(2)).intValue();
-                //Find for all that students (Sn) that I prefers over S check if Sn prefers I to In
-                int j = 0;
-                while(I_pref.get(j)>=studentScore){
-                    //I prefers the student with this score over S
-                    //Find the student
-                    int score = I_pref.get(j);
-                    int studentN =0; //A student who is more prefered by the internship than S
-                    for(int k = 0;k<studentScore;k++){ //find the index of the student
-                        Integer tempScore = computeInternshipStudentScore(marriage.getStudentGPA().get(k),marriage.getStudentMonths().get(k),marriage.getStudentProjects().get(k),marriage.getInternshipWeights().get(internship_matching).get(0),marriage.getInternshipWeights().get(internship_matching).get(1),marriage.getInternshipWeights().get(internship_matching).get(2)).intValue();
-                        if(score == tempScore){
-                            studentN = k;
-                            break;
+        //I have both preference lists
+        //traverse the entire matching
+        //check for both types of instabilities
+        for(int i = 0;i<marriage.getStudentCount();i++){
+            if(student_matching.get(i) != -1){ //student has an internship check for instability A
+                int S_Internship = student_matching.get(i); //the internship the student has -> student S
+                //find another student that I prefers to student S ie find S'
+                ArrayList<Integer> InternshipI_Preferences = marriage.getInternshipPreference().get(S_Internship);
+                for(int j = 0;j<marriage.getStudentCount();j++){
+                    if(InternshipI_Preferences.get(j) == i)
+                        break;
+                    else{ //another student has higher preference ie I prefers S' to s
+                        //check if s prefers I to I'
+                        int Iprime = student_matching.get(j);
+                        for(int k = 0;k<marriage.getInternshipCount();k++){
+                            //go through s' preference list and see which comes first
+                            if(marriage.getStudentPreference().get(j).get(k) == Iprime)
+                                break;
+                            else if(marriage.getStudentPreference().get(j).get(k) == S_Internship)
+                                return false; //I is higher on s' preference list
                         }
                     }
-                    int Internship_studentN = student_matching.get(studentN); //The internship S' is matched with
-                    //Compare if s' prefers I over I'
-                    ArrayList<Integer> Sn_prefList = marriage.getStudentPreference().get(studentN); //Sn preference list
-                    //I = internship_matching
-                    //I' = internship_studentN
-                    for(int k = 0;k<internship_matching;k++){
-                       if(Sn_prefList.get(k) == Internship_studentN) //I' higher on preference list so no instability
+                }
+            }
+            else{ //student does not have an internship check for instability B
+                for(int j = 0;j<marriage.getInternshipCount();j++) {
+                    //go through all internships and see if any internship prefers Student s (i) to their match
+                    //start with internship 0 ... n (j)
+                    //find the student that has that internship
+                    //see in the internships (j) preference list which comes first i or the student already matched
+                    int studentPrime = 0;
+                    for(int k = 0;k<marriage.getStudentCount();k++){
+                        if(student_matching.get(k) == j)
+                            studentPrime = k;
+                    }
+                    for(int k =0;k<marriage.getStudentCount();k++){
+                        if(marriage.getInternshipPreference().get(j).get(k) == studentPrime)
                             break;
-                       if(Sn_prefList.get(k) == internship_matching) //Instability
-                            return false;
-                    }
-                    j++;
-                }
-            }
-            else{
-                //Instability B
-                //Find a person with no internship - s'
-                //calculate their score
-                //go through all internships and see if any internships prefer the student s' over current matched student s
-                //can be done by seeing if the student s' has a higher score than the student s per every internship
-                for(int j = 0;j<marriage.getStudentCount();j++){
-                    if(j!=i){
-                        //save the internship of the student at location j
-                        //calculate the score of the person s based on the internship
-                        //calculate the score of the person s' based on the internship
-                        //if s' > s than s' is higher on the preference list of I
-                        //since s' doesn't have an internship but is higher preferred than we have an instability
-                        int s_internship = marriage.getStudentMatching().get(j);
-                        Integer studentScoreS = computeInternshipStudentScore(marriage.getStudentGPA().get(j),marriage.getStudentMonths().get(j),marriage.getStudentProjects().get(j),marriage.getInternshipWeights().get(s_internship).get(0),marriage.getInternshipWeights().get(s_internship).get(1),marriage.getInternshipWeights().get(s_internship).get(2)).intValue();
-                        Integer studentScoreSPrime = computeInternshipStudentScore(marriage.getStudentGPA().get(i),marriage.getStudentMonths().get(i),marriage.getStudentProjects().get(i),marriage.getInternshipWeights().get(s_internship).get(0),marriage.getInternshipWeights().get(s_internship).get(1),marriage.getInternshipWeights().get(s_internship).get(2)).intValue();
-                        if(studentScoreSPrime>studentScoreS)
+                        else if(marriage.getInternshipPreference().get(j).get(k) == i)
                             return false;
                     }
                 }
             }
+
+
         }
+
+
         return true;
     }
 
