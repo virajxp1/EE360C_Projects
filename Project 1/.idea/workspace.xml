@@ -81,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567721553319</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="isStabale method Instability A beta">
+      <created>1567726394269</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1567726394269</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -104,7 +111,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Work on Internship prefrence list" />
     <MESSAGE value="Comments on isStableMatching method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Comments on isStableMatching method" />
+    <MESSAGE value="isStabale method Instability A beta" />
+    <option name="LAST_COMMIT_MESSAGE" value="isStabale method Instability A beta" />
   </component>
   <component name="masterDetails">
     <states>

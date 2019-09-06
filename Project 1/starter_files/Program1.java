@@ -78,15 +78,15 @@ public class Program1 extends AbstractProgram1 {
     public boolean isStableMatching(Matching marriage) {
         /* TODO implement this function
             Instability A:
-            Student s has internship I
-            Student s' has no internship
-            I prefers s' to s
-            -------------------------------------------------
-            Instability B:
             Student s has Internship I
             Student s' has Internship I'
             Internship I prefers s' to s
             Student s' prefers Internship I to I'
+            -------------------------------------------------
+            Instability B:
+            Student s has internship I
+            Student s' has no internship
+            I prefers s' to s
             -------------------------------------------------
          */
         ArrayList<Integer> student_matching = marriage.getStudentMatching();
@@ -95,12 +95,11 @@ public class Program1 extends AbstractProgram1 {
             if(internship_matching != -1){
                 //Instability A
                 ArrayList<Integer> I_pref = marriage.getInternshipPreference().get(internship_matching); //List of the preferences of Internship I
-                ArrayList<Integer> S_pref = marriage.getStudentPreference().get(i); //List of the preferences of Student S
                 Integer studentScore = computeInternshipStudentScore(marriage.getStudentGPA().get(i),marriage.getStudentMonths().get(i),marriage.getStudentProjects().get(i),marriage.getInternshipWeights().get(internship_matching).get(0),marriage.getInternshipWeights().get(internship_matching).get(1),marriage.getInternshipWeights().get(internship_matching).get(2)).intValue();
                 //Find for all that students (Sn) that I prefers over S check if Sn prefers I to In
                 int j = 0;
                 while(I_pref.get(j)>=studentScore){
-                    //I preferes the student with this score over S
+                    //I prefers the student with this score over S
                     //Find the student
                     int score = I_pref.get(j);
                     int studentN =0; //A student who is more prefered by the internship than S
@@ -127,10 +126,26 @@ public class Program1 extends AbstractProgram1 {
             }
             else{
                 //Instability B
-
+                //Find a person with no internship - s'
+                //calculate their score
+                //go through all internships and see if any internships prefer the student s' over current matched student s
+                //can be done by seeing if the student s' has a higher score than the student s per every internship
+                for(int j = 0;j<marriage.getStudentCount();j++){
+                    if(j!=i){
+                        //save the internship of the student at location j
+                        //calculate the score of the person s based on the internship
+                        //calculate the score of the person s' based on the internship
+                        //if s' > s than s' is higher on the preference list of I
+                        //since s' doesn't have an internship but is higher preferred than we have an instability
+                        int s_internship = marriage.getStudentMatching().get(j);
+                        Integer studentScoreS = computeInternshipStudentScore(marriage.getStudentGPA().get(j),marriage.getStudentMonths().get(j),marriage.getStudentProjects().get(j),marriage.getInternshipWeights().get(s_internship).get(0),marriage.getInternshipWeights().get(s_internship).get(1),marriage.getInternshipWeights().get(s_internship).get(2)).intValue();
+                        Integer studentScoreSPrime = computeInternshipStudentScore(marriage.getStudentGPA().get(i),marriage.getStudentMonths().get(i),marriage.getStudentProjects().get(i),marriage.getInternshipWeights().get(s_internship).get(0),marriage.getInternshipWeights().get(s_internship).get(1),marriage.getInternshipWeights().get(s_internship).get(2)).intValue();
+                        if(studentScoreSPrime>studentScoreS)
+                            return false;
+                    }
+                }
             }
         }
-
         return true;
     }
 
