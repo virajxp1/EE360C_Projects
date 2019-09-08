@@ -43,10 +43,9 @@ public class Program1 extends AbstractProgram1 {
                                                                       ArrayList<Integer> student_projects){
         ArrayList<ArrayList<Integer>> internshipPref = new ArrayList<>(internshipCount);
         ArrayList<ArrayList<Integer>> studentScores = new ArrayList<>(internshipCount);
-        for(int i = 0;i<studentCount;i++){
+        for(int i = 0;i<internshipCount;i++){
             internshipPref.add(i, new ArrayList<>(studentCount));
             studentScores.add(i, new ArrayList<>(studentCount));
-
         }
         for(int i = 0;i<internshipCount;i++){
             for(int j = 0;j<studentCount;j++){
@@ -59,10 +58,13 @@ public class Program1 extends AbstractProgram1 {
             //insertion sort for each row
             for(int i =0;i<studentCount;i++){
                 int element = studentScores.get(s).get(i);
+                int index = internshipPref.get(s).get(i);
                 for(int j = i-1;j>=0;j--){
                     if(studentScores.get(s).get(j)<element){
                         internshipPref.get(s).set(j+1,internshipPref.get(s).get(j));
-                        internshipPref.get(s).set(j,element);
+                        internshipPref.get(s).set(j,index);
+                        studentScores.get(s).set(j+1,studentScores.get(s).get(j));
+                        studentScores.get(s).set(j,element);
                     }
                 }
             }
@@ -103,14 +105,14 @@ public class Program1 extends AbstractProgram1 {
                 //find another student that I prefers to student S ie find S'
                 ArrayList<Integer> InternshipI_Preferences = marriage.getInternshipPreference().get(S_Internship);
                 for(int j = 0;j<marriage.getStudentCount();j++){
+                    int Iprime = student_matching.get(j);
                     if(InternshipI_Preferences.get(j) == i)
                         break;
                     else{ //another student has higher preference ie I prefers S' to s
                         //check if s prefers I to I'
-                        int Iprime = student_matching.get(j);
                         for(int k = 0;k<marriage.getInternshipCount();k++){
                             //go through s' preference list and see which comes first
-                            if(marriage.getStudentPreference().get(j).get(k) == Iprime)
+                            if(marriage.getStudentPreference().get(j).get(k) == Iprime || S_Internship == Iprime)
                                 break;
                             else if(marriage.getStudentPreference().get(j).get(k) == S_Internship)
                                 return false; //I is higher on s' preference list
@@ -137,11 +139,7 @@ public class Program1 extends AbstractProgram1 {
                     }
                 }
             }
-
-
         }
-
-
         return true;
     }
 

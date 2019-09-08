@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="f9d0b089-92e4-4d20-9c92-08d0089daeae" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project 1/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project 1/Driver.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Project 1/Program1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project 1/Program1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project 1/sample_inputs/3-1.in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter_files/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/starter_files/Driver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/starter_files/Program1.java" beforeDir="false" afterPath="$PROJECT_DIR$/starter_files/Program1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter_files/sample_inputs/3-1.in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter_files/sample_inputs/5-2.in" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +103,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567742971575</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="isStabale method Instability B beta 2">
+      <created>1567795297443</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1567795297443</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -125,20 +137,16 @@
     <MESSAGE value="Comments on isStableMatching method" />
     <MESSAGE value="isStabale method Instability A beta" />
     <MESSAGE value="isStabale method Instability B beta" />
-    <option name="LAST_COMMIT_MESSAGE" value="isStabale method Instability B beta" />
+    <MESSAGE value="isStabale method Instability B beta 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="isStabale method Instability B beta 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/starter_files/Program1.java</url>
-          <line>95</line>
+          <line>97</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/starter_files/Program1.java</url>
-          <line>70</line>
-          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
