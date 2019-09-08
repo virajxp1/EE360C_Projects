@@ -8,7 +8,7 @@ public class Driver {
     public static boolean testGS_r;
 
     public static void main(String[] args) throws Exception {
-        String[] a = {"-b","C:\\Users\\viraj\\Documents\\Projects\\EE360C_Projects\\Project 1\\starter_files\\5-2.in"};
+        String[] a = {"-b","C:\\Users\\viraj\\Documents\\Projects\\EE360C_Projects\\Project 1\\starter_files\\6-3.in"};
         parseArgs(a);
 
         Matching problem = parseMatchingProblem(filename);
