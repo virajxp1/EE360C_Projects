@@ -7,6 +7,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.HashMap;
 
 /**
  * Your solution goes in this class.
@@ -151,8 +152,54 @@ public class Program1 extends AbstractProgram1 {
      */
     @Override
     public Matching stableMarriageGaleShapley_studentoptimal(Matching marriage) {
-        /* TODO implement this function */
-        return null; /* TODO remove this line */
+
+        //This hash map holds the current engagements of the students -> allows comparions with constant access
+        HashMap <Integer,Integer> student_engagement= new HashMap<>();
+        for(int i = 0;i<marriage.getStudentCount();i++){
+            student_engagement.put(i,-1);
+        }
+
+        //this hash map stores each internship with the number of avaiable spots in that internship
+        HashMap<Integer,Integer> internshipSlots = new HashMap<>();
+        for(int i = 0;i<marriage.getInternshipCount();i++){
+            internshipSlots.put(i,marriage.getInternshipSlots().get(i));
+        }
+
+        //Construct an inverse list for constant access time
+
+        //Create a queue for all the students
+        ArrayList<Integer> queue = new ArrayList<>();
+        for(int i = 0;i<marriage.getStudentCount();i++){
+            queue.add(i);
+        }
+
+        int slotsFilled = 0;
+        while(slotsFilled<marriage.totalInternshipSlots()){
+            int student = queue.get(0);
+            for(int i = 0;i<marriage.getInternshipCount();i++){
+                //the internship currently being looked at
+                int internship = marriage.getStudentPreference().get(student).get(i);
+
+                //if the internship has open slots the student is paired with the internship
+                if(internshipSlots.get(internship) != 0){ //there are slots
+                    student_engagement.replace(student,internship);
+                    slotsFilled++;
+                    break;
+                }
+                else{
+                    //else you check to see if the internship prefers the student over another student
+                    //if replaced add to back of queue
+                }
+            }
+        }
+
+        //copy over hashmap to Array list to marriage
+        ArrayList<Integer> finalMatching = new ArrayList<>();
+        for(int i = 0;i<marriage.getStudentCount();i++){
+            finalMatching.set(i,student_engagement.get(i));
+        }
+        marriage.setStudentMatching(finalMatching);
+        return marriage;
     }
 
     private ArrayList<Matching> getAllStableMarriages(Matching marriage) {
