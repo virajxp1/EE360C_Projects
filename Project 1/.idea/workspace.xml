@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d0b089-92e4-4d20-9c92-08d0089daeae" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Project 1/Program1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project 1/Program1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/starter_files/Program1.java" beforeDir="false" afterPath="$PROJECT_DIR$/starter_files/Program1.java" afterDir="false" />
-    </list>
+    <list default="true" id="f9d0b089-92e4-4d20-9c92-08d0089daeae" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567977216873</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="G-S algo working for 3 testcases">
+      <created>1568576562675</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1568576562675</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -141,7 +144,8 @@
     <MESSAGE value="isStabale method Instability B beta" />
     <MESSAGE value="isStabale method Instability B beta 2" />
     <MESSAGE value="Up to 5-2 working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Up to 5-2 working" />
+    <MESSAGE value="G-S algo working for 3 testcases" />
+    <option name="LAST_COMMIT_MESSAGE" value="G-S algo working for 3 testcases" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
