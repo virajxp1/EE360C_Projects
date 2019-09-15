@@ -4,10 +4,7 @@
  */
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Your solution goes in this class.
@@ -153,10 +150,15 @@ public class Program1 extends AbstractProgram1 {
     @Override
     public Matching stableMarriageGaleShapley_studentoptimal(Matching marriage) {
 
-        //This hash map holds the current engagements of the students -> allows comparions with constant access
-        HashMap <Integer,Integer> student_engagement= new HashMap<>();
+        HashMap <Integer,ArrayList<Integer>> Internship_engagements= new HashMap<Integer, ArrayList<Integer>>();
+        for(int i = 0;i<marriage.getInternshipCount();i++){
+            Internship_engagements.put(i,new ArrayList<>());
+        }
+
+        //This holds the current engagements of the students
+        ArrayList<Integer> student_engagement = new ArrayList<>();
         for(int i = 0;i<marriage.getStudentCount();i++){
-            student_engagement.put(i,-1);
+            student_engagement.add(i,-1);
         }
 
         //this hash map stores each internship with the number of avaiable spots in that internship
@@ -166,6 +168,20 @@ public class Program1 extends AbstractProgram1 {
         }
 
         //Construct an inverse list for constant access time
+        ArrayList<ArrayList<Integer>> inverseList = new ArrayList<>();
+        for(int i = 0;i<marriage.getInternshipCount();i++){
+            inverseList.add(i,new ArrayList<>());
+            for(int j = 0;j<marriage.getStudentCount();j++){
+                inverseList.get(i).add(j,0);
+            }
+        }
+
+        for(int i = 0;i<marriage.getInternshipCount();i++){
+            for(int j = 0;j<marriage.getStudentCount();j++){
+                int prefI = marriage.getInternshipPreference().get(i).get(j);
+                inverseList.get(i).set(prefI,j);
+            }
+        }
 
         //Create a queue for all the students
         ArrayList<Integer> queue = new ArrayList<>();
@@ -174,31 +190,41 @@ public class Program1 extends AbstractProgram1 {
         }
 
         int slotsFilled = 0;
-        while(slotsFilled<marriage.totalInternshipSlots()){
-            int student = queue.get(0);
+        int totalSlots = marriage.totalInternshipSlots();
+        while(slotsFilled<totalSlots){
+            int student = queue.get(0); //the student being looked at
             for(int i = 0;i<marriage.getInternshipCount();i++){
                 //the internship currently being looked at
                 int internship = marriage.getStudentPreference().get(student).get(i);
 
                 //if the internship has open slots the student is paired with the internship
                 if(internshipSlots.get(internship) != 0){ //there are slots
-                    student_engagement.replace(student,internship);
+                    student_engagement.set(student,internship);
+                    Internship_engagements.get(internship).add(student);
+                    int currentSlots = internshipSlots.get(internship);
+                    currentSlots--;
+                    internshipSlots.replace(internship,currentSlots);
                     slotsFilled++;
+                    queue.remove(0);
                     break;
                 }
-                else{
-                    //else you check to see if the internship prefers the student over another student
-                    //if replaced add to back of queue
+                else{ //all slots are filled
+                    //you check to see if the internship prefers the student over another student
+                    int lowestPrefStudent = Collections.min(Internship_engagements.get(internship));
+                    if(inverseList.get(internship).get(student)<inverseList.get(internship).get(lowestPrefStudent)){
+                        Internship_engagements.get(internship).remove(Internship_engagements.get(internship).indexOf(lowestPrefStudent));
+                        Internship_engagements.get(internship).add(student);
+                        student_engagement.set(lowestPrefStudent,-1);
+                        student_engagement.set(student,internship);
+                        queue.remove(0);
+                        queue.add(lowestPrefStudent);
+                        break;
+                    }
                 }
             }
         }
 
-        //copy over hashmap to Array list to marriage
-        ArrayList<Integer> finalMatching = new ArrayList<>();
-        for(int i = 0;i<marriage.getStudentCount();i++){
-            finalMatching.set(i,student_engagement.get(i));
-        }
-        marriage.setStudentMatching(finalMatching);
+        marriage.setStudentMatching(student_engagement);
         return marriage;
     }
 
