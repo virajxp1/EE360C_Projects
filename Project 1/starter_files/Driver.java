@@ -8,13 +8,13 @@ public class Driver {
     public static boolean testGS_r;
 
     public static void main(String[] args) throws Exception {
-        String[] a = {"-g","C:\\Users\\viraj\\Documents\\Projects\\EE360C_Projects\\Project 1\\starter_files\\2-2.in"};
+        String[] a = {"-g","C:\\Users\\viraj\\Documents\\Projects\\EE360C_Projects\\Project 1\\starter_files\\6-3.in"};
         //String[] a = {"-g","5-4.in"};
 
         parseArgs(a);
         Matching problem = parseMatchingProblem(filename);
         testRun(problem);
-        String[] b = {"-b","C:\\Users\\viraj\\Documents\\Projects\\EE360C_Projects\\Project 1\\starter_files\\2-2.in"};
+        String[] b = {"-b","C:\\Users\\viraj\\Documents\\Projects\\EE360C_Projects\\Project 1\\starter_files\\6-3.in"};
 
         parseArgs(b);
         problem = parseMatchingProblem(filename);

@@ -139,6 +139,16 @@ public class Program1 extends AbstractProgram1 {
                 }
             }
         }
+
+        //check if there is an internship with an empty slot
+        Integer totalSlotsFilled = 0;
+        for(int i = 0;i<marriage.getStudentCount();i++){
+            if(student_matching.get(i) != -1){
+                totalSlotsFilled++;
+            }
+        }
+        if(!totalSlotsFilled.equals(marriage.totalInternshipSlots()))
+            return false;
         return true;
     }
 
@@ -150,22 +160,6 @@ public class Program1 extends AbstractProgram1 {
      */
     @Override
     public Matching stableMarriageGaleShapley_studentoptimal(Matching marriage) {
-
-        /** Debuging
-         *
-         */
-        for(int i = 0;i<marriage.getInternshipCount();i++){
-            System.out.println(Arrays.toString(marriage.getInternshipPreference().get(i).toArray()));
-        }
-        System.out.println();
-        for(int i = 0;i<marriage.getStudentCount();i++){
-            System.out.println(Arrays.toString(marriage.getStudentPreference().get(i).toArray()));
-        }
-        System.out.println();
-        /** END deubging
-         *
-         */
-
 
         HashMap <Integer,ArrayList<Integer>> Internship_engagements= new HashMap<Integer, ArrayList<Integer>>();
         for(int i = 0;i<marriage.getInternshipCount();i++){
@@ -200,46 +194,66 @@ public class Program1 extends AbstractProgram1 {
             }
         }
 
-        //Create a queue for all the students
-        ArrayList<Integer> queue = new ArrayList<>();
-        for(int i = 0;i<marriage.getStudentCount();i++){
-            queue.add(i);
+        //Create a arraylist per student that holds how many times they have proposed
+        ArrayList<Integer> proposal = new ArrayList<>();
+        for(int i =0;i<marriage.getStudentCount();i++){
+            proposal.add(marriage.getInternshipCount());
         }
 
-        int slotsFilled = 0;
         int totalSlots = marriage.totalInternshipSlots();
-        while(slotsFilled<totalSlots){
-            int student = queue.get(0); //the student being looked at
-            for(int i = 0;i<marriage.getInternshipCount();i++){
-                //the internship currently being looked at
-                int internship = marriage.getStudentPreference().get(student).get(i);
 
-                //if the internship has open slots the student is paired with the internship
-                if(internshipSlots.get(internship) != 0){ //there are slots
-                    student_engagement.set(student,internship);
-                    Internship_engagements.get(internship).add(student);
-                    int currentSlots = internshipSlots.get(internship);
-                    currentSlots--;
-                    internshipSlots.replace(internship,currentSlots);
-                    slotsFilled++;
-                    queue.remove(0);
-                    break;
-                }
-                else{ //all slots are filled
-                    //you check to see if the internship prefers the student over another student
-                    int lowestPrefStudent = Collections.min(Internship_engagements.get(internship));
-                    if(inverseList.get(internship).get(student)<inverseList.get(internship).get(lowestPrefStudent)){
-                        Internship_engagements.get(internship).remove(Internship_engagements.get(internship).indexOf(lowestPrefStudent));
-                        Internship_engagements.get(internship).add(student);
-                        student_engagement.set(lowestPrefStudent,-1);
-                        student_engagement.set(student,internship);
-                        queue.remove(0);
-                        queue.add(0,lowestPrefStudent);
-                        break;
-                    }
-                }
-            }
-        }
+        int happyStudents = 0;
+        int totalStudents = marriage.getStudentCount();
+
+
+       int currentStudent = 0;
+       while(happyStudents<totalSlots){
+           boolean happy = false;
+           for(int i = 0;i<=proposal.get(currentStudent);i++){
+               int startOfStudentProposalsIndex = marriage.getInternshipCount()-proposal.get(currentStudent); //index to start looking at for the student
+               int internship = marriage.getStudentPreference().get(currentStudent).get(startOfStudentProposalsIndex); //The internship we are looking at
+               //if the internship has empty slots -> add the student
+               if(internshipSlots.get(internship)!=0){
+                   student_engagement.set(currentStudent,internship);
+                   Internship_engagements.get(internship).add(currentStudent);
+                   int currentSlots = internshipSlots.get(internship);
+                   currentSlots--;
+                   internshipSlots.replace(internship,currentSlots);
+                   happyStudents++;
+                   int currentProposal = proposal.get(currentStudent);
+                   currentProposal--;
+                   proposal.set(currentStudent,currentProposal);
+                   happy = true;
+                   break;
+               }
+               //else compare the student to all other students already matched with the internship
+               else{
+                   int lowestPrefStudent = Collections.min(Internship_engagements.get(internship));
+                   if(inverseList.get(internship).get(currentStudent)<inverseList.get(internship).get(lowestPrefStudent)){
+                       Internship_engagements.get(internship).remove(Internship_engagements.get(internship).indexOf(lowestPrefStudent));
+                       Internship_engagements.get(internship).add(currentStudent);
+                       student_engagement.set(lowestPrefStudent,-1);
+                       student_engagement.set(currentStudent,internship);
+                       int currentProposal = proposal.get(currentStudent);
+                       currentProposal--;
+                       proposal.set(currentStudent,currentProposal);
+                       happy = true;
+                       break;
+                   }
+                   else{
+                       int currentProposal = proposal.get(currentStudent);
+                       currentProposal--;
+                       proposal.set(currentStudent,currentProposal);
+                   }
+               }
+           }
+           if(proposal.get(currentStudent) == 0 && !happy)
+               happyStudents++;
+           do{
+               currentStudent = (currentStudent+1)%marriage.getStudentCount();
+           }
+           while(student_engagement.get(currentStudent) != -1 && happyStudents<totalStudents);
+       }
 
         marriage.setStudentMatching(student_engagement);
         return marriage;
