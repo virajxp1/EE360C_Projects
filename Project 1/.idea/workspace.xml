@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d0b089-92e4-4d20-9c92-08d0089daeae" name="Default Changelist" comment="" />
+    <list default="true" id="f9d0b089-92e4-4d20-9c92-08d0089daeae" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project 1/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project 1/Driver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Project 1/Program1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Project 1/Program1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter_files/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/starter_files/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter_files/Program1.java" beforeDir="false" afterPath="$PROJECT_DIR$/starter_files/Program1.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568576562675</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="G-S algo working for 4 testcases">
+      <created>1568576903941</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1568576903941</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -145,15 +158,21 @@
     <MESSAGE value="isStabale method Instability B beta 2" />
     <MESSAGE value="Up to 5-2 working" />
     <MESSAGE value="G-S algo working for 3 testcases" />
-    <option name="LAST_COMMIT_MESSAGE" value="G-S algo working for 3 testcases" />
+    <MESSAGE value="G-S algo working for 4 testcases" />
+    <option name="LAST_COMMIT_MESSAGE" value="G-S algo working for 4 testcases" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/starter_files/Program1.java</url>
-          <line>193</line>
-          <option name="timeStamp" value="8" />
+          <line>95</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/starter_files/Program1.java</url>
+          <line>100</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -103,14 +103,15 @@ public class Program1 extends AbstractProgram1 {
                 //find another student that I prefers to student S ie find S'
                 ArrayList<Integer> InternshipI_Preferences = marriage.getInternshipPreference().get(S_Internship);
                 for(int j = 0;j<marriage.getStudentCount();j++){
-                    int Iprime = student_matching.get(j);
+                    int Sprime = InternshipI_Preferences.get(j);
+                    int Iprime = student_matching.get(Sprime);
                     if(InternshipI_Preferences.get(j) == i)
                         break;
                     else{ //another student has higher preference ie I prefers S' to s
-                        //check if s prefers I to I'
+                        //check if s' prefers I to I' s' = internship_preference.get(j)
                         for(int k = 0;k<marriage.getInternshipCount();k++){
                             //go through s' preference list and see which comes first
-                            if(marriage.getStudentPreference().get(j).get(k) == Iprime || S_Internship == Iprime)
+                            if(marriage.getStudentPreference().get(Sprime).get(k) == Iprime || S_Internship == Iprime)
                                 break;
                             else if(marriage.getStudentPreference().get(j).get(k) == S_Internship)
                                 return false; //I is higher on s' preference list
@@ -149,6 +150,22 @@ public class Program1 extends AbstractProgram1 {
      */
     @Override
     public Matching stableMarriageGaleShapley_studentoptimal(Matching marriage) {
+
+        /** Debuging
+         *
+         */
+        for(int i = 0;i<marriage.getInternshipCount();i++){
+            System.out.println(Arrays.toString(marriage.getInternshipPreference().get(i).toArray()));
+        }
+        System.out.println();
+        for(int i = 0;i<marriage.getStudentCount();i++){
+            System.out.println(Arrays.toString(marriage.getStudentPreference().get(i).toArray()));
+        }
+        System.out.println();
+        /** END deubging
+         *
+         */
+
 
         HashMap <Integer,ArrayList<Integer>> Internship_engagements= new HashMap<Integer, ArrayList<Integer>>();
         for(int i = 0;i<marriage.getInternshipCount();i++){
@@ -217,7 +234,7 @@ public class Program1 extends AbstractProgram1 {
                         student_engagement.set(lowestPrefStudent,-1);
                         student_engagement.set(student,internship);
                         queue.remove(0);
-                        queue.add(lowestPrefStudent);
+                        queue.add(0,lowestPrefStudent);
                         break;
                     }
                 }
