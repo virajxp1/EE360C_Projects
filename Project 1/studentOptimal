@@ -1,0 +1,32 @@
+ while(slotsFilled<totalSlots){
+            int student = queue.get(0); //the student being looked at
+            for(int i = 0;i<marriage.getInternshipCount();i++){
+                //the internship currently being looked at
+                int internship = marriage.getStudentPreference().get(student).get(i);
+
+                //if the internship has open slots the student is paired with the internship
+                if(internshipSlots.get(internship) != 0){ //there are slots
+                    student_engagement.set(student,internship);
+                    Internship_engagements.get(internship).add(student);
+                    int currentSlots = internshipSlots.get(internship);
+                    currentSlots--;
+                    internshipSlots.replace(internship,currentSlots);
+                    slotsFilled++;
+                    queue.remove(0);
+                    break;
+                }
+                else{ //all slots are filled
+                    //you check to see if the internship prefers the student over another student
+                    int lowestPrefStudent = Collections.min(Internship_engagements.get(internship));
+                    if(inverseList.get(internship).get(student)<inverseList.get(internship).get(lowestPrefStudent)){
+                        Internship_engagements.get(internship).remove(Internship_engagements.get(internship).indexOf(lowestPrefStudent));
+                        Internship_engagements.get(internship).add(student);
+                        student_engagement.set(lowestPrefStudent,-1);
+                        student_engagement.set(student,internship);
+                        queue.remove(0);
+                        queue.add(0,lowestPrefStudent);
+                        break;
+                    }
+                }
+            }
+        }
