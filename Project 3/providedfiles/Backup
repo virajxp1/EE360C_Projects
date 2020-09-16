@@ -1,0 +1,115 @@
+// Implement your dynamic programming algorithm here
+        // You may use helper functions as needed
+
+        /*
+        2-D OPT solution
+        the opt is the max
+        the player will choose the option that maximizes his coins
+        and the opponent chooses the side that minimizes the players coins
+        that's why you have to simulate through all the options so the player
+        can choose the best one
+
+        i,j are indices one of them have to be the start/end of the array
+
+        if i == j that means there is one city so return 0
+        if there are 2 cities then the opponent will choose the max of the 2 cities
+        the player can only collect the smaller of the 2 cities
+
+        array size 3,4,5... pick the maximum of the possible sub arrays
+        and the pick the minimum of the 2 options
+        2 options are including the start or including the end
+
+        looking for OPT(0,N-1);
+
+        opt(i,j) = min( max of all possible sub arrays from i,j/2 + value of coins collected    ,
+                max of all possible sub arrays from j/2 to j + value of coins collected) ;
+
+        so if N == 5
+        ur looking for OPT(0,4)
+
+        OPT(0,5) = min ( max(opt(0,0),opt(0,1),opt(0,2)) + value of coins selected from the sub array , max(opt(2,4),opt(3,4) opt(4,4)+ value of coins selected from the sub array)
+
+
+         */
+
+        int N = cities.length;
+        int[][] OPT = new int[N][N];
+
+        //Some way to store cuts so you dont have to generate them every time
+
+        //Store array of cuts based on start and end index
+
+        // all you have to do it pull that array and do binary search on the array of cuts
+
+
+        for(int i = N-1 ;i>=0;i--){
+            for(int j = i;j<N;j++){
+                if(i == j) //1 coin left
+                    OPT[i][j] = 0;
+                else if(j-i == 1){ //Base Case
+                    //2 coins left
+                    OPT[i][j] = Math.min(cities[i],cities[j]);
+                }
+
+        return OPT[0][N-1];
+    }
+
+
+
+    else {
+                    int high = j;
+                    int low = i;
+                    int mid;
+
+                    int midVal = 0;
+                    int midPlus1 = 0;
+                    int midMinus1 = 0;
+
+                    while (true) {
+                        //mid value
+                        mid = (high + low) / 2;
+                        int leftMid = OPT[i][mid] + Cuts[i][mid].value;
+                        int rightMid = OPT[mid + 1][j] + Cuts[mid + 1][j].value;
+
+                        if (leftMid > rightMid) { //Min is right
+                            midVal = rightMid;
+                        } else { //Min is left
+                            midVal = leftMid;
+                        }
+
+                        if (high - low == 1) {
+                            OPT[i][j] = midVal;
+                            break;
+                        }
+
+                        //mid + 1 val
+
+                        int leftMidUp = OPT[i][mid + 1] + Cuts[i][mid + 1].value;
+                        int rightMidUp = OPT[mid + 2][j] + Cuts[mid + 2][j].value;
+
+                        if (leftMidUp > rightMidUp) { //Min is right
+                            midPlus1 = rightMidUp;
+                        } else { //Min is left
+                            midPlus1 = leftMidUp;
+                        }
+
+                        //mid -1 val
+                        int leftMidD = OPT[i][mid - 1] + Cuts[i][mid - 1].value;
+                        int rightMidD = OPT[mid][j] + Cuts[mid][j].value;
+
+                        if (leftMidD > rightMidD) { //Min is right
+                            midMinus1 = rightMidD;
+                        } else { //Min is left
+                            midMinus1 = leftMidD;
+                        }
+
+                        if (midVal >= midMinus1 && midVal >= midPlus1) {
+                            OPT[i][j] = midVal;
+                            break;
+                        } else if (midVal > midMinus1) {
+                            low = mid;
+                        } else {
+                            high = mid;
+                        }
+                    }
+                }
